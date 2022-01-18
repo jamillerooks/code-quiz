@@ -18,7 +18,7 @@
 					alloted. Keep in mind that incorrect answers will penalize your score
 					time by ten seconds!
 				</p>
-				<button class="start-quizbtn">Start Quiz</button>
+				<button id="start-quizbtn">Start Quiz</button>
 			</div>
 			<!--The Quiz Questions to be typed in JavaScript-->
 		</section>
@@ -38,10 +38,10 @@
 				<h2>All Done!</h2>
 				<div class="flex">
 					<p id="final-score-text">Your final score is</p>
-					<textarea name="" id="final-score" cols="1" rows="1"></textarea>
+					<span id="final-score"></span>
 				</div>
 				<label for="initials">Enter Initals</label>
-				<input type="text" name="initials" id="#" class="initials" />
+				<input type="text" name="initials"  id="initials" required />
 				<button type="submit" id="submit-btn">Submit</button>
 			</div>
 		</section>
@@ -50,9 +50,7 @@
 		<section class="highscore-content">
 			<div class="highscore-container">
 				<h2>Highscores</h2>
-				<div>
-					<textarea name="" id="highscore" cols="5" rows="1"></textarea>
-				</div>
+				<div id="highscore"></div>
 				<button id="backbtn">Go Back</button>
 				<button id="clearbtn">Clear Highscores</button>
 			</div>
