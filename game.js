@@ -8,16 +8,10 @@ var submitBtn = $('.btn');
 var formEl =($('form'));
 var questionEl = document.querySelector('.title');
 var timerEl = document.querySelector("#countdown");
-
+var timeLeft = 60;
 var score = 0
 
-
-
-
-//Hide the Final Score Section on when the quiz is opened
-
-
-//Quiz questions as an object and array
+//Array of questions for the quiz
 
 var question =  {
 
@@ -55,37 +49,40 @@ var questions = [
 
 ];
 
-
- //Start Quiz 
+//Hide the Final Score Section when the quiz is opened
  formEl.hide();
-
-
-
  
+ //This is the timer for the quiz. Timer starts when you open the quiz.
  function countdown() {
-    var timeLeft = 30;
-    var timeInterval = setInterval(function () {
-// Set the `textContent` of `timerEl` to show the remaining seconds
-timeLeft--;
-document.getElementById('countdown').innerHTML='00:' + timeLeft;
-if (timeLeft < 0){
-  clearInterval(timeInterval);
+  var timeInterval = setInterval(function () {
+
+    if (timeLeft > 1) {
+          timerEl.textContent = timeLeft;
+          timeLeft--;
+
+    } else if (timeLeft === 1) {
+          timerEl.textContent = timeLeft;
+          timeLeft--;
+//Timer ends and the final score section appears
+    } else {
+          timerEl.textContent = '';     
+          clearInterval(timeInterval);
+          formEl.show();
+    }
+    //Timer stops when the last question is answered
+        if(quiz.currentPosition >= questions.length){
+        clearInterval(timeInterval)
+    }
+  }, 1000);
 }
-    },1000);
-  }//error line 76 - how do you clarify wrong answer
-  document.getElementById({outcome = 'wrong'}).addEventListener('click', function () {
-    sec -= 10;
-    document.getElementById('countdown').innerHTML='00:' + timeLeft;
-  });
-      
-  countdown();
+countdown();
  
-      
+ //Start Quiz     
  var quiz = {
     start: function() {
         this.currentPosition = 0;   
         this.score = 0;
-   
+ //Get questions from array  
     var optionEl = document.querySelectorAll('.option');
         optionEl.forEach((element, index) => {
         element.addEventListener('click', () => {
@@ -105,7 +102,7 @@ if (timeLeft < 0){
             element.textContent = q.options[index];
     });
   },
-  
+  //Check answers
     checkAnswer: function(userSelected) {
         var currentQuestion = questions[this.currentPosition];
 
@@ -114,6 +111,7 @@ if (timeLeft < 0){
                 this.showOutcome(true);
       }
             else {
+              timeLeft -= 10;
                 this.showOutcome(false);
       }
                 this.updateStats();
@@ -123,17 +121,19 @@ if (timeLeft < 0){
       nextQuestion: function(){
           this.currentPosition++;
                 if(this.currentPosition == questions.length) {
+                  //Show form once all questions are answered
                   formEl.show();
-                  localStorage.setItem('mostRecentScore', this.score);
-    
-        }
+
+                  //Post (timer/score) in local storage
+                  localStorage.setItem('mostRecentScore', timeLeft);
+            }
     },
       updateStats: function(){
         var scoreEl = document.getElementById('finalScore');
             scoreEl.textContent = `Correct Answers: ${this.score}`;
           
     },
-
+  //Display "correct" or "wrong" once a question is answered
       showOutcome: function(isCorrect){
         var outcomeEl = document.getElementById('outcome');
         var outcome = '';
@@ -142,7 +142,7 @@ if (timeLeft < 0){
             outcome ='Correct';
         }
             else{
-            //Need a funtion to decrement time for wrong answer
+        
             outcome = 'Wrong';
         }
             outcomeEl.textContent = outcome;     
