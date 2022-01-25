@@ -12,23 +12,17 @@
 		<div class="container">
 			<div id="end">
 				<form class="final-score-container">
-					<h2>All Done!</h2>
-					<p id="fScore"></p>
+					<h2>Final Score!</h2>
+					<label for="initials">Score</label>
+					<p id="finalScore"></p>
 					<div></div>
-					<label for="username">Enter Initals</label>
-					<input type="text" name="username" id="username" required />
-					<button
-						type="submit"
-						class="btn"
-						id="saveScoreBtn"
-						onclick="saveHighScore(event)"
-						
-					>
-						Save
+					<label for="username">Enter Initals and save score</label>
+					<input type="text" name="username" id="username"  />
+					<button type="submit" class="btn" id="saveScoreBtn" onClick="saveHighScore(event)"  disabled
+						>Save</button> 					
 					</button>
 				</form>
-				<a class="btn" href="./game.html">Play Again</a>
-				<a class="btn" href="./index .html">Go Home</a>
+				
 			</div>
 		</div>
 		<script src="end.js"></script>
